@@ -1,0 +1,24 @@
+@model GrpcClientDemo.Employee
+@{
+    ViewData["Title"] = "Sửa nhân viên";
+}
+
+<h1 class="my-3">Sửa nhân viên</h1>
+
+@* Form POST tới action Edit; EmployeeID để readonly (vẫn được gửi đi để server biết sửa ai) *@
+<form asp-action="Edit" method="post" style="max-width:480px">
+    <div class="mb-3">
+        <label class="form-label">EmployeeID</label>
+        <input asp-for="EmployeeID" class="form-control" readonly />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">FirstName</label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">LastName</label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

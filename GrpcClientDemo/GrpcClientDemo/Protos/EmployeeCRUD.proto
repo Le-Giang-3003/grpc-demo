@@ -1,0 +1,30 @@
+syntax = "proto3";                          // Dùng proto3 (khuyến nghị cho gRPC)
+package Northwind;                           // Tên package trong protobuf (phải GIỐNG server)
+option csharp_namespace = "GrpcClientDemo";  // Namespace C# khi sinh code phía CLIENT
+
+// ===== ĐỊNH NGHĨA SERVICE (các hàm gọi từ xa) =====
+service EmployeeCRUD {
+  rpc SelectAll  (Empty)          returns (Employees);  // Lấy tất cả nhân viên
+  rpc SelectByID (EmployeeFilter) returns (Employee);   // Lấy 1 nhân viên theo ID
+  rpc Insert     (Employee)       returns (Empty);      // Thêm mới
+  rpc Update     (Employee)       returns (Empty);      // Cập nhật
+  rpc Delete     (EmployeeFilter) returns (Empty);      // Xóa
+}
+
+// ===== ĐỊNH NGHĨA MESSAGE (dữ liệu gửi/nhận) =====
+message Empty {                              // Message rỗng (dùng khi không cần dữ liệu)
+}
+
+message Employee {                           // Một nhân viên
+  int32  employeeID = 1;                     // Số 1,2,3 là FIELD NUMBER (định danh khi mã hóa nhị phân)
+  string firstName  = 2;                     // KHÔNG phải giá trị, mà là vị trí trường
+  string lastName   = 3;
+}
+
+message Employees {                          // Danh sách nhiều nhân viên
+  repeated Employee items = 1;               // 'repeated' = mảng/list
+}
+
+message EmployeeFilter {                     // Bộ lọc (để chọn/xóa theo ID)
+  int32 employeeID = 1;
+}

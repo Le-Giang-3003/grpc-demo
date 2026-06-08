@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 3 package cần cho CLIENT gRPC -->
+    <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />   <!-- Tạo channel/kết nối tới server -->
+    <PackageReference Include="Google.Protobuf" Version="3.24.4" />   <!-- Mã hóa/giải mã message protobuf -->
+    <PackageReference Include="Grpc.Tools" Version="2.57.0">          <!-- Sinh code C# từ file .proto khi build -->
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Đăng ký file proto để Grpc.Tools sinh code phía CLIENT (chỉ stub gọi đi) -->
+    <Protobuf Include="Protos\EmployeeCRUD.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+</Project>

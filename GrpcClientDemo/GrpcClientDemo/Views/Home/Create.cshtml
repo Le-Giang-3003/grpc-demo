@@ -1,0 +1,20 @@
+@model GrpcClientDemo.Employee
+@{
+    ViewData["Title"] = "Thêm nhân viên";
+}
+
+<h1 class="my-3">Thêm nhân viên</h1>
+
+@* Form POST tới action Create; gửi FirstName + LastName, ID do server tự sinh *@
+<form asp-action="Create" method="post" style="max-width:480px">
+    <div class="mb-3">
+        <label class="form-label">FirstName</label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">LastName</label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
