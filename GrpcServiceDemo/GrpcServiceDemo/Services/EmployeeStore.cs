@@ -12,7 +12,7 @@ namespace GrpcServiceDemo
             new Employee { EmployeeID = 3, FirstName = "Janet",  LastName = "Leverling" },
         };
 
-        // Khóa (lock) để an toàn khi nhiều request truy cập cùng lúc (thread-safe)
+        //lock để an toàn khi nhiều request truy cập cùng lúc (thread-safe)
         private static readonly object _lock = new object();
 
         public static List<Employee> GetAll()
@@ -37,7 +37,6 @@ namespace GrpcServiceDemo
             lock (_lock)
             {
                 var clone = employee.Clone();
-                // Nếu client không gửi ID (mặc định = 0) thì server tự sinh ID mới = max + 1
                 if (clone.EmployeeID == 0)
                     clone.EmployeeID = _employees.Count == 0 ? 1 : _employees.Max(e => e.EmployeeID) + 1;
                 _employees.Add(clone);

@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Đăng ký dịch vụ gRPC vào DI container
 builder.Services.AddGrpc();
 
-// Cấu hình Kestrel: lắng nghe HTTPS tại cổng 5001 với giao thức HTTP/2 (bắt buộc cho gRPC)
+// Cấu hình Kestrel: lắng nghe HTTPS tại cổng 5001 với giao thức HTTP/2
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenLocalhost(5001, listenOptions =>
@@ -21,7 +21,6 @@ var app = builder.Build();
 // Ánh xạ service gRPC vào pipeline
 app.MapGrpcService<EmployeeCRUDService>();
 
-// Endpoint GET "/" — nhắc rằng phải gọi bằng gRPC client, không phải trình duyệt
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client.");
 
 app.Run();

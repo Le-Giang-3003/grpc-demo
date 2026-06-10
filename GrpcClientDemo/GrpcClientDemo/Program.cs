@@ -6,12 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// ===== Đăng ký gRPC client qua DI (Dependency Injection) =====
+//Đăng ký gRPC client qua DI
 // Tạo MỘT lần và tái sử dụng cho mọi request (channel nên được dùng lại, không tạo mới liên tục).
 builder.Services.AddSingleton(_ =>
 {
-    // CẢNH BÁO: handler dưới đây BỎ QUA kiểm tra chứng chỉ TLS — CHỈ DÙNG KHI DEV
-    // (server dùng chứng chỉ dev tự ký). KHÔNG dùng ở production!
     var httpHandler = new HttpClientHandler
     {
         ServerCertificateCustomValidationCallback =
@@ -23,7 +21,6 @@ builder.Services.AddSingleton(_ =>
         "https://localhost:5001",
         new GrpcChannelOptions { HttpHandler = httpHandler });
 
-    // Stub (client proxy) có sẵn 5 method tương ứng 5 RPC trong proto
     return new EmployeeCRUD.EmployeeCRUDClient(channel);
 });
 
@@ -33,7 +30,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
